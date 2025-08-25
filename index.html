@@ -130,6 +130,14 @@ else:
       <!-- Niveles con textarea y botones Run/Hint -->
       <div class="nivel hidden" id="lvl1" data-locked="true">
         <h3>Nivel 1: Control de acceso</h3>
+        <p><strong>Instrucciones:</strong> Crea una función llamada <code>acceso(edad)</code> que reciba la edad de una persona y devuelva:</p>
+        <ul>
+          <li>"PERMITIDO" si la edad es mayor o igual a 18.</li>
+          <li>"DENEGADO" si la edad es menor a 18.</li>
+        </ul>
+        <p><strong>Ejemplo:</strong></p>
+        <pre><code>acceso(20) ➜ "PERMITIDO"
+acceso(15) ➜ "DENEGADO"</code></pre>
         <textarea id="code1" placeholder="Escribe tu función acceso() aquí..."></textarea>
         <button class="run" data-id="1">Ejecutar</button>
         <button class="hint" data-id="1">Pista</button>
@@ -137,6 +145,16 @@ else:
       </div>
       <div class="nivel hidden" id="lvl2" data-locked="true">
         <h3>Nivel 2: Clasificación de notas</h3>
+        <p><strong>Instrucciones:</strong> Crea una función llamada <code>clasificar(nota)</code> que reciba un número (0 a 100) y devuelva:</p>
+        <ul>
+          <li>"Insuficiente" si la nota es menor a 60.</li>
+          <li>"Bueno" si la nota está entre 60 y 89.</li>
+          <li>"Excelente" si la nota es 90 o más.</li>
+        </ul>
+        <p><strong>Ejemplo:</strong></p>
+        <pre><code>clasificar(50) ➜ "Insuficiente"
+clasificar(75) ➜ "Bueno"
+clasificar(95) ➜ "Excelente"</code></pre>
         <textarea id="code2" placeholder="Escribe tu función clasificar() aquí..."></textarea>
         <button class="run" data-id="2">Ejecutar</button>
         <button class="hint" data-id="2">Pista</button>
@@ -144,6 +162,18 @@ else:
       </div>
       <div class="nivel hidden" id="lvl3" data-locked="true">
         <h3>Nivel 3: Categoría de edad</h3>
+        <p><strong>Instrucciones:</strong> Crea una función llamada <code>categoria(edad)</code> que reciba la edad y devuelva:</p>
+        <ul>
+          <li>"Niño" si la edad es menor a 12.</li>
+          <li>"Adolescente" si la edad está entre 12 y 17.</li>
+          <li>"Adulto" si la edad está entre 18 y 59.</li>
+          <li>"Anciano" si la edad es 60 o más.</li>
+        </ul>
+        <p><strong>Ejemplo:</strong></p>
+        <pre><code>categoria(10) ➜ "Niño"
+categoria(15) ➜ "Adolescente"
+categoria(30) ➜ "Adulto"
+categoria(70) ➜ "Anciano"</code></pre>
         <textarea id="code3" placeholder="Escribe tu función categoria() aquí..."></textarea>
         <button class="run" data-id="3">Ejecutar</button>
         <button class="hint" data-id="3">Pista</button>
@@ -151,6 +181,16 @@ else:
       </div>
       <div class="nivel hidden" id="lvl4" data-locked="true">
         <h3>Nivel 4: Nivel de riesgo</h3>
+        <p><strong>Instrucciones:</strong> Crea una función llamada <code>riesgo(porcentaje)</code> que reciba un número (0 a 100) y devuelva:</p>
+        <ul>
+          <li>"Bajo" si el porcentaje es menor a 50.</li>
+          <li>"Moderado" si está entre 50 y 79.</li>
+          <li>"Alto" si es 80 o más.</li>
+        </ul>
+        <p><strong>Ejemplo:</strong></p>
+        <pre><code>riesgo(30) ➜ "Bajo"
+riesgo(65) ➜ "Moderado"
+riesgo(90) ➜ "Alto"</code></pre>
         <textarea id="code4" placeholder="Escribe tu función riesgo() aquí..."></textarea>
         <button class="run" data-id="4">Ejecutar</button>
         <button class="hint" data-id="4">Pista</button>
