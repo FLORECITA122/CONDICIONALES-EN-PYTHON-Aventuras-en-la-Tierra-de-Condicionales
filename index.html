@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Misión Python: Aventuras en la Tierra de Condicionales</title>
+<link rel="stylesheet" href="style.css" />
+<script src="https://cdn.jsdelivr.net/npm/skulpt/dist/skulpt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/skulpt/dist/skulpt-stdlib.js"></script>
+</head>
+<body>
+  <!-- Barra de Accesibilidad -->
+<div class="a11y-bar" role="region" aria-label="Herramientas de accesibilidad">
+  <button id="toggleContrast" type="button" title="Activar/Desactivar alto contraste">Alto contraste</button>
+  <button id="increaseFont" type="button" title="Aumentar tamaño de texto">A+</button>
+  <button id="decreaseFont" type="button" title="Disminuir tamaño de texto">A-</button>
+  <button id="btnSpeakSection" type="button" title="Leer en voz alta la sección actual">🔊 Leer sección</button>
+  <button id="btnStopSpeak" type="button" title="Detener lectura">⏹ Detener</button>
+</div>
+
+<header>
+  <div class="logo">
+    <img src="logo.png" alt="Logo" />
+    🚀 <strong>Academia Código</strong>
+  </div>
+  <nav>
+    <a href="#" data-section="inicio">Inicio</a>
+    <a href="#" data-section="contenido">Contenido</a>
+    <a href="#" data-section="desafios">Desafíos</a>
+  </nav>
+</header>
+
+<a href="#" class="btn-back" id="btnBack">⬅ Volver</a>
+
+<main>
+  <!-- INICIO -->
+  <section id="inicio" class="active">
+    <div class="hero">
+      <img src="logo1.png" alt="Logo de Misión Código" class="hero-logo">
+      <h1 class="hero-title">Aventuras en la Tierra de Condicionales</h1>
+      <p class="hero-subtitle">
+        Bienvenidos, jovenes programadores!!! Su misión es recorrer la Academia de Condicionales y demostrar sus habilidades para resolver desafíos. Cada nivel superado los acercará a convertirse en Maestro del Código.
+      </p>
+    </div>
+  </section>
+
+  <!-- CONTENIDO -->
+  <section id="contenido">
+    <h2> <img src="logo1.png" alt="Imagen motivadora" class="hero-img"> Contenido Teórico</h2>
+    <p>Los condicionales permiten que un programa tome decisiones según ciertas condiciones. Son fundamentales en programación para ejecutar instrucciones según diferentes escenarios.</p>
+
+    <button class="accordion">🎬 Video introductorio</button>
+    <div class="panel video-tutorial">
+      <h3>Condicionales en Python: Ejemplos prácticos</h3>
+      <iframe src="https://www.youtube.com/embed/P6UFAcOobKI"
+        title="Video Tutorial Condicionales Python"
+        frameborder="0"
+        allowfullscreen></iframe>
+    </div>
+    
+    <button class="accordion">1. Condicional simple (if)</button>
+    <div class="panel">
+      <p>Se ejecuta un bloque de código solo si se cumple una condición:</p> 
+      <pre><code>if condición:
+    # código a ejecutar si la condición es True</code></pre>
+      <img src="simple.png" alt="Imagen simple" class="hero-img">
+    </div>
+
+    <button class="accordion">2. Condicional compuesto (if / else)</button>
+    <div class="panel">
+      <p>Permite ejecutar un bloque si la condición es verdadera y otro si es falsa:</p>
+      <pre><code>if condición:
+    # si verdadero
+else:
+    # si falso</code></pre>
+      <img src="condicional.png" alt="Imagen condicional" class="hero-img">
+    </div>
+
+    <button class="accordion">3. Múltiples condiciones (if / elif / else)</button>
+    <div class="panel">
+      <p>Permite evaluar varias condiciones en orden y ejecutar la primera que se cumpla:</p>
+      <pre><code>if cond1:
+    # acción1
+elif cond2:
+    # acción2
+else:
+    # acción por defecto</code></pre>
+      <img src="condicional-multiple.png" alt="Imagen condicional-multiple" class="hero-img">
+    </div>
+
+    <button class="accordion">4. Condiciones anidadas</button>
+    <div class="panel">
+      <p>Puedes combinar condicionales dentro de otros condicionales para decisiones más complejas:</p>
+      <pre><code>edad = 20
+if edad >= 18:
+    if edad &lt; 21:
+        print("Adulto joven")
+    else:
+        print("Adulto")
+else:
+    print("Menor de edad")</code></pre>
+      <img src="anidada.png" alt="Imagen anidada" class="hero-img">
+    </div>
+  </section>
+
+  <!-- DESAFÍOS -->
+  <section id="desafios">
+    <div class="desafios-cover">
+      <div class="desafios-cover-inner">
+        <h2> <img src="logo1.png" alt="Imagen motivadora" class="hero-img"> Desafíos</h2>
+        <p>Completa los desafíos para ganar puntos, desbloquear niveles y obtener insignias. Cada nivel tiene instrucciones claras y ejemplos para ayudarte.</p>
+
+        <div class="hud" id="hudMain">
+          <p>Puntaje: <span id="score">0</span> | Progreso: <span id="progressText">0%</span></p>
+          <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+          <p>Insignias:</p>
+          <div class="medals" id="medalsMain">
+            <span class="medal" data-level="1">🟢</span>
+            <span class="medal" data-level="2">🔵</span>
+            <span class="medal" data-level="3">🟣</span>
+            <span class="medal" data-level="4">🏆</span>
+          </div>
+        </div>
+
+        <button id="startChallenges" class="start-btn">Comenzar desafíos</button>
+      </div>
+    </div>
+
+    <div class="niveles-container">
+      <!-- Niveles con textarea y botones Run/Hint -->
+      <div class="nivel hidden" id="lvl1" data-locked="true">
+        <h3>Nivel 1: Control de acceso</h3>
+        <textarea id="code1" placeholder="Escribe tu función acceso() aquí..."></textarea>
+        <button class="run" data-id="1">Ejecutar</button>
+        <button class="hint" data-id="1">Pista</button>
+        <div class="console" id="console1"></div>
+      </div>
+      <div class="nivel hidden" id="lvl2" data-locked="true">
+        <h3>Nivel 2: Clasificación de notas</h3>
+        <textarea id="code2" placeholder="Escribe tu función clasificar() aquí..."></textarea>
+        <button class="run" data-id="2">Ejecutar</button>
+        <button class="hint" data-id="2">Pista</button>
+        <div class="console" id="console2"></div>
+      </div>
+      <div class="nivel hidden" id="lvl3" data-locked="true">
+        <h3>Nivel 3: Categoría de edad</h3>
+        <textarea id="code3" placeholder="Escribe tu función categoria() aquí..."></textarea>
+        <button class="run" data-id="3">Ejecutar</button>
+        <button class="hint" data-id="3">Pista</button>
+        <div class="console" id="console3"></div>
+      </div>
+      <div class="nivel hidden" id="lvl4" data-locked="true">
+        <h3>Nivel 4: Nivel de riesgo</h3>
+        <textarea id="code4" placeholder="Escribe tu función riesgo() aquí..."></textarea>
+        <button class="run" data-id="4">Ejecutar</button>
+        <button class="hint" data-id="4">Pista</button>
+        <div class="console" id="console4"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="levelSuccess" class="level-success">
+  🎉 ¡Nivel completado! 🎉
+  <div class="hud-fixed" id="hudFixed">
+    <div class="progress">
+      <div class="progress-bar" id="progressBarFixed"></div>
+    </div>
+    <p id="progressTextFixed">0%</p>
+    <div class="medals" id="medalsFixed">
+      <span class="medal" data-level="1">🟢</span>
+      <span class="medal" data-level="2">🔵</span>
+      <span class="medal" data-level="3">🟣</span>
+      <span class="medal" data-level="4">🏆</span>
+    </div>
+  </div>
+</div>
+
+<div id="confetti"></div>
+
+<footer>
+  <p>© 2025 Academia Código | Licencias <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a> | Florencia Marrero García</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
+
+</body>
+</html>
+

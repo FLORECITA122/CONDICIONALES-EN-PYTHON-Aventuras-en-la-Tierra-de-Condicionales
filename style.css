@@ -1,0 +1,576 @@
+/* -------------------- General -------------------- */
+body {
+  margin: 0;
+  font-family: system-ui;
+  background: #0a0f1a;
+  color: #e5e7eb;
+  scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: rgba(15, 23, 42, 0.95);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  z-index: 1000;
+}
+
+header .logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+header nav {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+header nav a {
+  color: #e5e7eb;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+header nav a:hover {
+  color: #0a0f1a;
+  background: #8b5cf6; /* morado vivo */
+  transform: scale(1.1);
+}
+
+main {
+  flex: 1;
+  padding-top: 90px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* -------------------- Secciones -------------------- */
+main section {
+  display: none;
+  padding: 40px 20px;
+  margin-bottom: 40px;
+  background: #111827;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  transition: all 0.3s;
+}
+main section.active { display: block; }
+main section:hover { background: #1e293b; }
+
+/* -------------------- Tipografía -------------------- */
+h1, h2, h3 { margin: 0 0 12px; }
+h1 { font-size: 3rem; color: #22d3ee; text-align: center; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.2rem; }
+
+p { margin: 0 0 10px; color: #cbd5e1; }
+
+pre {
+  background: #0b1324;
+  padding: 12px;
+  border-radius: 12px;
+  overflow-x: auto;
+  transition: 0.3s;
+}
+pre:hover { background: #1e293b; }
+
+textarea {
+  width: 100%;
+  min-height: 120px;
+  background: #0b1324;
+  color: #e5e7eb;
+  border: 1px solid #8b5cf6;
+  border-radius: 12px;
+  padding: 12px;
+  margin: 10px 0;
+  font-family: monospace;
+}
+
+button {
+  cursor: pointer;
+  margin: 4px 4px 10px 0;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+button.run { background: #22c55e; color: #fff; }
+button.run:hover { background: #16a34a; }
+
+button.hint { background: #a78bfa; color: #0a0f1a; }
+button.hint:hover { background: #9333ea; }
+
+.console {
+  background: #1e293b;
+  padding: 10px;
+  border-radius: 8px;
+  min-height: 50px;
+  margin-top: 10px;
+  overflow-x: auto;
+  font-family: monospace;
+}
+
+/* -------------------- Acordeón -------------------- */
+.accordion {
+  background-color: #0b1324;
+  color: #e5e7eb;
+  cursor: pointer;
+  padding: 14px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 1rem;
+  border-radius: 12px;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+.accordion:hover { background: #1e293b; }
+
+.panel {
+  padding: 10px 14px;
+  display: none;
+  background-color: #111827;
+  overflow: hidden;
+  margin-bottom: 10px;
+  border-radius: 12px;
+}
+
+/* -------------------- HUD -------------------- */
+.hud { margin-bottom: 20px; }
+.progress {
+  width: 100%;
+  background-color: #0b1324;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 20px;
+  margin: 6px 0;
+}
+.progress-bar {
+  height: 100%;
+  width: 0;
+  background-color: #22d3ee;
+  transition: width 0.5s;
+}
+
+footer {
+  background: #0f172a;
+  text-align: center;
+  padding: 20px;
+  color: #cbd5e1;
+}
+footer a {
+  color: #38bdf8;
+  text-decoration: none;
+}
+
+.nivel[data-locked="true"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* -------------------- Mensaje de nivel completado -------------------- */
+.level-success {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #22c55e;
+  color: #fff;
+  padding: 30px 40px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  border-radius: 16px;
+  z-index: 2000;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  max-width: 90%;
+  word-break: break-word;
+}
+
+/* -------------------- HUD fijo dentro del popup -------------------- */
+.hud-fixed {
+  position: fixed;
+  top: 50%;
+  left: calc(50% + 220px);
+  transform: translateY(-50%);
+  background: #111827cc;
+  padding: 12px 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  z-index: 2100;
+  color: #e5e7eb;
+  font-weight: 700;
+  text-align: center;
+  min-width: 120px;
+}
+
+/* -------------------- Botón volver -------------------- */
+#btnBack {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #8b5cf6;
+  color: #fff;
+  border-radius: 12px;
+  padding: 8px 16px;
+  text-decoration: none;
+  z-index: 1000;
+  display: none;
+  font-weight: 700;
+}
+
+/* -------------------- Responsivo -------------------- */
+@media screen and (max-width: 768px) {
+  header nav { flex-direction: column; gap: 15px; }
+  .accordion { font-size: 0.9rem; }
+  main section { padding: 20px 15px; }
+  .level-success { font-size: 1.5rem; padding: 25px 30px; }
+  #btnBack { padding: 6px 12px; bottom: 15px; right: 15px; }
+  .hud-fixed { left: 50%; top: calc(50% + 80px); transform: translateX(-50%); min-width: 60%; }
+}
+@media screen and (max-width: 480px) {
+  header nav { gap: 10px; }
+  .level-success { font-size: 1.3rem; padding: 20px 25px; }
+  #btnBack { padding: 5px 10px; bottom: 10px; right: 10px; font-size: 0.9rem; }
+  .hud-fixed { left: 50%; top: calc(50% + 70px); transform: translateX(-50%); width: 85%; font-size: 0.9rem; }
+}
+
+/* -------------------- Medallas animadas -------------------- */
+.medals { display: flex; justify-content: center; gap: 8px; margin-top: 8px; }
+.medal {
+  font-size: 1.5rem;
+  opacity: 0.3;
+  transform: scale(0.5);
+  transition: transform 0.5s ease, opacity 0.5s ease, text-shadow 0.5s ease;
+  position: relative;
+}
+.medal.unlocked {
+  opacity: 1;
+  transform: scale(1.2);
+  animation: pop 0.5s ease forwards;
+  text-shadow: 0 0 10px #fff, 0 0 15px #22d3ee, 0 0 20px #8b5cf6;
+}
+@keyframes pop {
+  0% { transform: scale(0.5); opacity: 0.3; }
+  50% { transform: scale(1.4); opacity: 1; }
+  100% { transform: scale(1.2); }
+}
+.medal.unlocked::after {
+  content: "✨";
+  position: absolute;
+  font-size: 1rem;
+  animation: sparkle 1s ease-in-out infinite;
+  right: -10px;
+  top: -10px;
+}
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: translateY(0) scale(0.8); }
+  50% { opacity: 1; transform: translateY(-5px) scale(1); }
+}
+
+/* -------------------- Overlay de misión completada -------------------- */
+#achievementOverlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(180deg, rgba(139,92,246,0.95), rgba(16,185,129,0.95));
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  text-align: center;
+}
+#achievementOverlay > div {
+  max-width: 900px;
+  padding: 30px;
+  border-radius: 16px;
+  background: rgba(0,0,0,0.2);
+}
+#achievementOverlay h1 { font-size: 3rem; margin-bottom: 10px; }
+#achievementOverlay p { font-size: 1.25rem; margin-bottom: 20px; }
+#achievementOverlay button {
+  padding: 12px 24px;
+  font-size: 1rem;
+  margin: 5px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.3s;
+}
+#achievementOverlay button#restartOverlayBtn { background: #ffffff; color: #10b981; }
+#achievementOverlay button#restartOverlayBtn:hover { background: #d1fae5; }
+#achievementOverlay button#closeOverlayBtn { background: transparent; border: 2px solid rgba(255,255,255,0.6); color: white; }
+#achievementOverlay button#closeOverlayBtn:hover { background: rgba(255,255,255,0.2); }
+
+/* -------------------- Contenidos: acordeón con colores y videos -------------------- */
+#contenido .accordion {
+  cursor: pointer;
+  padding: 14px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  transition: all 0.3s;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+/* Patrones automáticos de color para todos los acordeones (morados y verdes) */
+#contenido .accordion:nth-child(4n+1) { background: #8b5cf6; color: #fff; }
+#contenido .accordion:nth-child(4n+2) { background: #9333ea; color: #fff; }
+#contenido .accordion:nth-child(4n+3) { background: #10b981; color: #fff; }
+#contenido .accordion:nth-child(4n+4) { background: #22d3ee; color: #0a0f1a; }
+
+#contenido .accordion:hover { opacity: 0.9; transform: scale(1.02); }
+
+#contenido .panel {
+  display: none;
+  padding: 12px 16px;
+  background: #1e293b;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  color: #cbd5e1;
+}
+
+#contenido .panel video {
+  width: 100%;
+  max-height: 400px;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+
+#contenido .panel h3 { margin-bottom: 8px; color: #22d3ee; }
+#contenido .panel p { margin-bottom: 10px; }
+
+#contenido .panel.show { display: block; animation: fadeIn 0.4s ease; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* -------------------- Video tutorial -------------------- */
+.video-tutorial {
+  background: #1e293b;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.video-tutorial h3 { margin-bottom: 10px; color: #22d3ee; }
+.video-tutorial iframe {
+  width: 100%; max-width: 560px; height: 315px; border-radius: 12px;
+}
+
+/* -------------------- PORTADA de Desafíos -------------------- */
+.desafios-cover {
+  width: calc(100% + 40px);
+  margin-left: -20px;
+  margin-right: -20px;
+  background: linear-gradient(135deg, #8b5cf6 0%, #10b981 60%, #1e293b 100%);
+  border-radius: 16px;
+  box-shadow: inset 0 0 60px rgba(0,0,0,0.25);
+}
+.desafios-cover-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 26px 20px 30px;
+  text-align: center;
+}
+.start-btn {
+  background: #22d3ee;
+  color: #0b1324;
+  font-weight: 800;
+  padding: 10px 18px;
+  border-radius: 12px;
+}
+.start-btn:hover { background: #38bdf8; }
+
+/* -------------------- Niveles: ocultos hasta empezar -------------------- */
+.hidden { display: none !important; }
+.niveles-container { margin-top: 22px; }
+.nivel.revealed { animation: fadeIn 0.35s ease; }
+/* -------------------- Tamaño del logo -------------------- */
+header .logo img {
+    width: 50px;   /* Cambiá este valor al tamaño que quieras */
+    height: auto;  /* Mantiene la proporción de la imagen */
+}
+
+.hero-logo {
+    width: 150px;  /* Logo grande de la sección inicio */
+    height: auto;
+}
+/* -------------------- Centrar logo de Misión Aventura -------------------- */
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centra horizontalmente todo dentro de .hero */
+    text-align: center;  /* centra texto y elementos internos */
+}
+
+.hero-logo {
+    margin-bottom: 20px; /* espacio debajo del logo */
+}
+/* -------------------- Logo cabecera más chico y centrado -------------------- */
+header .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* espacio entre imagen y texto */
+}
+
+header .logo img {
+    width: 40px;  /* ajusta el tamaño del logo de la cabecera */
+    height: auto;
+}
+
+/* -------------------- Centrar logo de Misión Aventura y Academia debajo -------------------- */
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centra todo horizontalmente */
+    text-align: center;
+}
+
+.hero-logo {
+    width: 150px; /* tamaño del logo principal */
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.hero .hero-subtitle {
+    max-width: 600px; /* opcional: limita ancho de texto */
+}
+/* -------------------- Título de contenido con imagen centrado -------------------- */
+#contenido h2 {
+    text-align: center;   /* centra el texto */
+    display: flex;        /* usa flexbox para alinear imagen y texto */
+    align-items: center;  /* centra verticalmente la imagen con el texto */
+    justify-content: center; /* centra horizontalmente */
+    gap: 30px;            /* espacio entre texto e imagen */
+}
+
+#contenido h2 img {
+    width: 100px;  /* ajusta tamaño de la imagen */
+    height: auto;
+}
+/* -------------------- Portada de Desafíos: texto centrado y tamaño responsivo -------------------- */
+.desafios-cover-inner {
+    text-align: center;
+    font-size: 1.1rem; /* tamaño base */
+}
+
+/* Título 🎯 Desafíos */
+.desafios-cover-inner h2 {
+    font-size: clamp(1.8rem, 5vw, 2.5rem); /* se ajusta entre 1.8rem y 2.5rem según pantalla */
+    margin-bottom: 10px;
+}
+
+/* Párrafo descriptivo */
+.desafios-cover-inner p {
+    font-size: clamp(1rem, 3vw, 1.3rem); /* ajusta según ancho de pantalla */
+    margin-bottom: 20px;
+}
+
+/* HUD: puntaje, progreso, insignias */
+.hud {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+}
+
+/* Insignias */
+.medals .medal {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+/* Botón comenzar desafíos */
+.start-btn {
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    padding: 10px 18px;
+}
+
+/* Imagen dentro de desafíos */
+.desafios-cover-inner img {
+    width: clamp(60px, 15vw, 100px);  /* ajusta tamaño proporcional a pantalla */
+    height: auto;
+    display: block;
+    margin: 15px auto;
+}
+/* -------------------- Imagen final de la pantalla de inicio -------------------- */
+.hero-end-img {
+    width: clamp(80px, 20vw, 150px); /* se ajusta según tamaño de pantalla */
+    height: auto;
+    display: block;
+    margin: 20px auto 0; /* centrada y con margen superior */
+}
+/* ===== Accesibilidad ===== */
+:root { --base-font-size: 16px; }
+html { font-size: var(--base-font-size); }
+
+/* Barra accesibilidad */
+.a11y-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+  display: flex;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #0f172a;
+  border-bottom: 1px solid #1f2937;
+}
+.a11y-bar button {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  background: #111827;
+  color: #e5e7eb;
+  font-weight: 600;
+  cursor: pointer;
+}
+.a11y-bar button:hover { background: #1f2937; }
+
+/* Alto contraste (aplica a gran parte del sitio) */
+.alto-contraste, .alto-contraste * {
+  background-color: #000 !important;
+  color: #ff0 !important;
+  border-color: #ff0 !important;
+  box-shadow: none !important;
+}
+.alto-contraste a { color: #0ff !important; text-decoration: underline; }
+.alto-contraste .progress { background: #111 !important; }
+.alto-contraste .progress-bar { background: #0ff !important; }
+.alto-contraste .start-btn,
+.alto-contraste button.run,
+.alto-contraste button.hint { background: #000 !important; color: #0ff !important; border: 1px solid #0ff !important; }
+
+/* Focus visibles para teclado */
+:focus-visible {
+  outline: 3px solid #22d3ee;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Respeto a usuarios con "reducir movimiento" */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
